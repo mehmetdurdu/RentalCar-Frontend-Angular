@@ -1,38 +1,32 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
+  constructor() {}
 
-  isLocalStorageSupported!: boolean;
-  localStorage!: Storage;
-
-  constructor() {
-    this.isLocalStorageSupported =
-      typeof window['localStorage'] != 'undefined' &&
-      window['localStorage'] != null;
-    if (this.isLocalStorageSupported) this.localStorage = window.localStorage;
-  }
-
-  get<T>(key: string): T | null {
-    if (!this.isLocalStorageSupported) return null;
-
-    let item: string | null = this.localStorage.getItem(key);
-    let result: T | null = item ? JSON.parse(item) : null;
-    return result;
-  }
-
-  set(key: string, value: any) {
-    if (!this.isLocalStorageSupported) return;
-
-    this.localStorage.setItem(key, JSON.stringify(value));
+  set(key: string, data: any) {
+    localStorage.setItem(key, data);
   }
 
   remove(key: string) {
-    if (!this.isLocalStorageSupported) return;
+    localStorage.removeItem(key);
+  }
 
-    this.localStorage.removeItem(key);
-    return false;
+  get(key: string) {
+    return localStorage.getItem(key);
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  removeToken() {
+    localStorage.removeItem('token');
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
   }
 }

@@ -29,6 +29,13 @@ export class CarImageService {
     );
   }
 
+  getCarImages(): Observable<ListResponseModel<CarImage>> {
+    return this.httpClient.get<ListResponseModel<CarImage>>(
+      this.apiUrl + 'carimages/getall'
+    );
+  }
+
+
   getCarImageUrl(Id: number): string {
     return this.apiUrl+"carimages/getfilebyid?id="+Id;
   }
